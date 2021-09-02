@@ -11,7 +11,7 @@ from OpenGL.GLU import *
 # <img src="./cube.png"/>
 
 # %%
-vertices = (
+cubeVertices = (
     (1,1,1),
     (1,1,-1),
     (1,-1,-1),
@@ -22,7 +22,25 @@ vertices = (
     (-1, 1,-1)
 )
 
-edges = (
+triangleVertices = (
+    (1, 0, 1),
+    (1, -1, -1),
+    (1, 1, -1),
+    (-1, 0, -1)
+)
+
+triangleEdges = (
+    (0,1),
+    (0,2),
+    (0,3),
+    (1,2),
+    (1,2),
+    (1,3),
+    (1,3),
+    (2,3)
+)
+
+cubeEdges = (
     (0,1),
     (0,3),
     (0,4),
@@ -37,14 +55,22 @@ edges = (
     (5,7)
 )
 
+# %%
+def triangle():
+    glBegin(GL_LINES)
+
+    for edge in triangleEdges:
+        for vertex in edge:
+            glVertex3fv(triangleVertices[vertex])
+    glEnd()
 
 # %%
 def cube():
     glBegin(GL_LINES)
 
-    for edge in edges:
+    for edge in cubeEdges:
         for vertex in edge:
-            glVertex3fv(vertices[vertex])
+            glVertex3fv(cubeVertices[vertex])
     glEnd()
 
 
@@ -56,9 +82,9 @@ def main():
 
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    glTranslatef(0.0, 0.0, -5)
+    glTranslatef(0.0, -0.5, -10)
 
-    glRotatef(0, 0, 0, 0)
+    glRotatef(1, 2, 1, 2)
 
     while True:
         for event in pygame.event.get():
@@ -68,15 +94,10 @@ def main():
 
         glRotatef(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        cube()
+        triangle()
         pygame.display.flip()
         pygame.time.wait(10)
 
 if __name__ == '__main__':
     main()
-
-
-# %%
-
-
 
