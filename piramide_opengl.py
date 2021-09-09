@@ -53,6 +53,7 @@ def main():
     # adicionando a perspectiva 
     gluPerspective(35, (display[0]/display[1]), 0.1, 50.0)
 
+    # adicionanodo a translação
     glTranslatef(0.0, -0.5, -10)
 
     # rotacionando o objeto inicial
