@@ -24,34 +24,6 @@ triangleEdges = (
     (2,3)
 )
 
-# definindo as vertices do cubo
-cubeVertices = (
-    (1,1,1),
-    (1,1,-1),
-    (1,-1,-1),
-    (1,-1,1),
-    (-1,1,1),
-    (-1,-1,-1),
-    (-1,-1,1),
-    (-1, 1,-1)
-)
-
-# Definindo cada junção das vértices do triangulo
-cubeEdges = (
-    (0,1),
-    (0,3),
-    (0,4),
-    (1,2),
-    (1,7),
-    (2,5),
-    (2,3),
-    (3,6),
-    (4,6),
-    (4,7),
-    (5,6),
-    (5,7)
-)
-
 def triangle():
     """
         Função que realiza a construção da pirâmide
@@ -63,20 +35,6 @@ def triangle():
         for vertex in edge:
             # desenhando as linhas
             glVertex3fv(triangleVertices[vertex])
-    glEnd()
-
-
-def cube():
-    """
-        Função que realiza a construção de um cubo
-    """
-    glBegin(GL_LINES)
-
-    # percorrendo cada junção para construir o cubo
-    for edge in cubeEdges:
-        for vertex in edge:
-            # desenhando as linhas
-            glVertex3fv(cubeVertices[vertex])
     glEnd()
 
 
