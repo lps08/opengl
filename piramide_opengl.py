@@ -54,7 +54,7 @@ def main():
     gluPerspective(35, (display[0]/display[1]), 0.1, 50.0)
 
     # adicionanodo a translação
-    glTranslatef(0.0, -0.5, -10)
+    glTranslatef(0.0, -0.5, -40)
 
     # rotacionando o objeto inicial
     glRotatef(1, 2, 1, 2)
