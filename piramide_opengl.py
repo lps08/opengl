@@ -5,7 +5,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 # definindo as vértices do triangulo
-triangleVertices = (
+piramideVertices = (
     (0, 0, 1),
     (1, -1, -1),
     (1, 1, -1),
@@ -13,7 +13,7 @@ triangleVertices = (
 )
 
 # definindo cada junção das vértices do triangulo
-triangleEdges = (
+piramideEdges = (
     (0,1),
     (0,2),
     (0,3),
@@ -24,17 +24,17 @@ triangleEdges = (
     (2,3)
 )
 
-def triangle():
+def piramide():
     """
         Função que realiza a construção da pirâmide
     """
     glBegin(GL_LINES)
 
     # percorrendo cada junção para construir a piramide
-    for edge in triangleEdges:
+    for edge in piramideEdges:
         for vertex in edge:
             # desenhando as linhas
-            glVertex3fv(triangleVertices[vertex])
+            glVertex3fv(piramideVertices[vertex])
     glEnd()
 
 
@@ -71,7 +71,7 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
         # chamando o objeto criado
-        triangle()
+        piramide()
 
         pygame.display.flip()
         pygame.time.wait(10)
