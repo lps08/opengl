@@ -59,6 +59,9 @@ def main():
     # rotacionando o objeto inicial
     glRotatef(1, 2, 1, 2)
 
+    # usando a escala no objeto
+    glScale(4, 4, 4)
+
     # loop que faz a renderização do objeto utilizando o pygame
     while True:
         for event in pygame.event.get():
