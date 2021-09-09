@@ -30,7 +30,7 @@ def piramide():
     """
     glBegin(GL_LINES)
 
-    # percorrendo cada junção para construir a piramide
+    # percorrendo cada vertice no ponto de junção para construir a piramide
     for edge in piramideEdges:
         for vertex in edge:
             # desenhando as linhas
@@ -51,10 +51,10 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     # adicionando a perspectiva 
-    gluPerspective(35, (display[0]/display[1]), 0.1, 50.0)
+    gluPerspective(40, (display[0]/display[1]), 0.1, 30.0)
 
     # adicionanodo a translação
-    glTranslatef(0.0, -0.5, -40)
+    glTranslatef(0.0, -0.5, -20)
 
     # rotacionando o objeto inicial
     glRotatef(1, 2, 1, 2)
