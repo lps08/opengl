@@ -4,6 +4,8 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+import cv2
+
 # definindo as vértices do triangulo
 piramideVertices = (
     (0, 0, 1),
@@ -24,17 +26,59 @@ piramideEdges = (
     (2,3)
 )
 
+superficies = (
+    (0, 1, 2),
+    (0, 1, 3),
+    (0, 2, 3),
+    (3, 1, 2),
+)
+
+colors = (
+    (1,0,0),
+    (0,1,0),
+    (0,0,1),
+    (0,0,0),
+    (0,1,1),
+)
+
+data = cv2.imread('./cube.png')
+
+
 def piramide():
     """
         Função que realiza a construção da pirâmide
     """
+
+    # usando gl_quads pois as cores serão definidas a partir das superficie da pirâmide
+    glBegin(GL_QUADS)
+
+    # percorrendo as superficies
+    for superfice in superficies:
+
+        # index onde será percorrido a lista de cores já definida
+        idx = 0
+
+        # percorrendo cada vertice de uma superficie
+        for vertice in superfice:
+            # aplicando a cor no index idx
+            glColor3fv(colors[idx])
+            # passando para o proximo index
+            idx += 1
+
+            # criando o triangulo
+            glVertex3fv(piramideVertices[vertice])
+
+    glEnd()
+
+    # usando o gl_lines para desenhar as linhas da piramide
     glBegin(GL_LINES)
 
     # percorrendo cada vertice no ponto de junção para construir a piramide
     for edge in piramideEdges:
-        for vertex in edge:
+        # percorrendo os vertices
+        for vertice in edge:
             # desenhando as linhas
-            glVertex3fv(piramideVertices[vertex])
+            glVertex3fv(piramideVertices[vertice])
     glEnd()
 
 
@@ -57,7 +101,7 @@ def main():
     glTranslatef(0.0, -0.5, -20)
 
     # rotacionando o objeto inicial
-    glRotatef(1, 2, 1, 2)
+    glRotatef(30, 2, 1, 2)
 
     # usando a escala no objeto
     glScale(4, 4, 4)
