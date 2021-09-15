@@ -4,8 +4,6 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-import cv2
-
 # definindo as vértices do triangulo
 piramideVertices = (
     (0, 0, 1),
@@ -40,8 +38,6 @@ colors = (
     (0,0,0),
     (0,1,1),
 )
-
-data = cv2.imread('./cube.png')
 
 
 def piramide():
@@ -80,7 +76,6 @@ def piramide():
             # desenhando as linhas
             glVertex3fv(piramideVertices[vertice])
     glEnd()
-
 
 def main():
     """

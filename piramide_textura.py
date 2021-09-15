@@ -117,8 +117,7 @@ def draw_cube(lines=False):
 
 pygame.init()
 display = (800, 600)
-screen = pygame.display.set_mode(
-    display, pygame.DOUBLEBUF | pygame.OPENGL | pygame.OPENGLBLIT)
+pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
 loadTexture()
 
