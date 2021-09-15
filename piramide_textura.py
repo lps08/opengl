@@ -4,9 +4,50 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+piramideVertices = (
+    (0, 0, 1),
+    (1, -1, -1),
+    (1, 1, -1),
+    (-1, 0, -1)
+)
+
+# definindo cada junção das vértices do triangulo
+piramideEdges = (
+    (0,1),
+    (0,2),
+    (0,3),
+    (1,2),
+    (1,2),
+    (1,3),
+    (1,3),
+    (2,3)
+)
+
+superficies = (
+    (0, 1, 2),
+    (0, 1, 3),
+    (0, 2, 3),
+    (3, 2, 1),
+)
+
+normals = [
+    ( 0,  0, -1),  # surface 0
+    (-1,  0,  0),  # surface 1
+    ( 1,  0,  0),  # surface 2
+    ( 0,  1,  0)   # surface 5
+]
+
+colors = (
+    (1,0,0),
+    (0,1,0),
+    (0,0,1),
+    (0,0,0),
+    (0,1,1),
+)
+
 
 def loadTexture():
-    textureSurface = pygame.image.load('textura.png')
+    textureSurface = pygame.image.load('texture.jpg')
     textureData = pygame.image.tostring(textureSurface, "RGBA", 1)
     width = textureSurface.get_width()
     height = textureSurface.get_height()
@@ -75,7 +116,35 @@ def piramide():
 
     glTexCoord2f(1.0, 1.0)
     glVertex3f(-1, 0, -1)
+
+    for i_superficie, superfice in enumerate(superficies):
+
+        # index onde será percorrido a lista de cores já definida
+        idx = 0
+
+        # adicionando superficies normais para pegar a luz
+        glNormal3fv(normals[i_superficie])
+
+        # percorrendo cada vertice de uma superficie
+        for vertice in superfice:
+            # aplicando a cor no index idx
+            glColor3fv(colors[idx])
+            # passando para o proximo index
+            idx += 1
+
+            # criando o triangulo
+            glVertex3fv(piramideVertices[vertice])
     
+    glEnd()
+
+    glBegin(GL_LINES)
+
+    # percorrendo cada vertice no ponto de junção para construir a piramide
+    for edge in piramideEdges:
+        # percorrendo os vertices
+        for vertice in edge:
+            # desenhando as linhas
+            glVertex3fv(piramideVertices[vertice])
     glEnd()
 
 def main():
@@ -93,16 +162,21 @@ def main():
     loadTexture()
 
     # adicionando a perspectiva 
-    gluPerspective(40, (display[0]/display[1]), 0.1, 30.0)
+    glMatrixMode(GL_PROJECTION)
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     # adicionanodo a translação
-    glTranslatef(0.0, -0.5, -20)
+    glMatrixMode(GL_MODELVIEW)
+    glTranslatef(0.0, 0, -5)
 
-    # rotacionando o objeto inicial
-    glRotatef(30, 2, 1, 2)
+    glRotatef(180, 20, -10, 20)
 
-    # usando a escala no objeto
-    glScale(4, 4, 4)
+    # glLight(GL_LIGHT0, GL_POSITION,  (0, 0, 1, 0)) # directional light from the front
+    glLight(GL_LIGHT0, GL_POSITION,  (5, 5, 5, 1)) # point light from the left, top, front
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (0, 0, 0, 1))
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
+
+    glEnable(GL_DEPTH_TEST)
 
     # loop que faz a renderização do objeto utilizando o pygame
     while True:
@@ -112,12 +186,20 @@ def main():
                 pygame.quit()
                 quit()
 
-        # para cada frame, o objeto rataciona
-        glRotatef(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+        glEnable(GL_COLOR_MATERIAL)
+        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE )
+
+        # glRotatef(1, 3, 1, 1)
         # chamando o objeto criado
         piramide()
+
+        glDisable(GL_LIGHT0)
+        glDisable(GL_LIGHTING)
+        glDisable(GL_COLOR_MATERIAL)
 
         pygame.display.flip()
         pygame.time.wait(10)
