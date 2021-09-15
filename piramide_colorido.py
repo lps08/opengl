@@ -28,8 +28,15 @@ superficies = (
     (0, 1, 2),
     (0, 1, 3),
     (0, 2, 3),
-    (3, 1, 2),
+    (3, 2, 1),
 )
+
+normals = [
+    ( 0,  0, -1),  # surface 0
+    (-1,  0,  0),  # surface 1
+    ( 1,  0,  0),  # surface 2
+    ( 0,  1,  0),  # surface 4
+]
 
 colors = (
     (1,0,0),
@@ -38,7 +45,6 @@ colors = (
     (0,0,0),
     (0,1,1),
 )
-
 
 def piramide():
     """
@@ -49,10 +55,13 @@ def piramide():
     glBegin(GL_QUADS)
 
     # percorrendo as superficies
-    for superfice in superficies:
+    for i_superficie, superfice in enumerate(superficies):
 
         # index onde será percorrido a lista de cores já definida
         idx = 0
+
+        # adicionando superficies normais para pegar a luz
+        glNormal3fv(normals[i_superficie])
 
         # percorrendo cada vertice de uma superficie
         for vertice in superfice:
@@ -81,6 +90,7 @@ def main():
     """
         Função principal onde irá renderizar a construção do objeto
     """
+    global superficies
     # iniciando o pygame, onde é o responsável pela renderização
     pygame.init()
 
@@ -90,16 +100,19 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     # adicionando a perspectiva 
-    gluPerspective(40, (display[0]/display[1]), 0.1, 30.0)
+    glMatrixMode(GL_PROJECTION)
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     # adicionanodo a translação
-    glTranslatef(0.0, -0.5, -20)
+    glMatrixMode(GL_MODELVIEW)
+    glTranslatef(0.0, 0, -5)
 
-    # rotacionando o objeto inicial
-    glRotatef(30, 2, 1, 2)
+    glLight(GL_LIGHT0, GL_POSITION,  (0, 0, 1, 0)) # directional light from the front
+    glLight(GL_LIGHT0, GL_POSITION,  (5, 5, 5, 1)) # point light from the left, top, front
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (0, 0, 0, 1))
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
 
-    # usando a escala no objeto
-    glScale(4, 4, 4)
+    glEnable(GL_DEPTH_TEST)
 
     # loop que faz a renderização do objeto utilizando o pygame
     while True:
@@ -109,12 +122,20 @@ def main():
                 pygame.quit()
                 quit()
 
-        # para cada frame, o objeto rataciona
-        glRotatef(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        
+
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+        glEnable(GL_COLOR_MATERIAL)
+        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE )
+
+        glRotatef(1, 3, 1, 1)
         # chamando o objeto criado
         piramide()
+
+        glDisable(GL_LIGHT0)
+        glDisable(GL_LIGHTING)
+        glDisable(GL_COLOR_MATERIAL)
 
         pygame.display.flip()
         pygame.time.wait(10)
