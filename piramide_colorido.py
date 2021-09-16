@@ -24,6 +24,7 @@ piramideEdges = (
     (2,3)
 )
 
+# definindo as superficies
 superficies = (
     (0, 1, 2),
     (0, 1, 3),
@@ -31,13 +32,15 @@ superficies = (
     (3, 2, 1),
 )
 
+# definindo as faces do poligono
 normals = [
-    ( 0,  0, -1),  # surface 0
-    (-1,  0,  0),  # surface 1
-    ( 1,  0,  0),  # surface 2
-    ( 0,  1,  0),  # surface 4
+    ( 0,  0, -1),  
+    (-1,  0,  0),  
+    ( 1,  0,  0),  
+    ( 0,  1,  0),
 ]
 
+# lista de cores
 colors = (
     (1,0,0),
     (0,1,0),
