@@ -168,11 +168,9 @@ def main():
     carregarTextura()
 
     # adicionando a perspectiva 
-    glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     # adicionanodo a translação
-    glMatrixMode(GL_MODELVIEW)
     glTranslatef(0.0, 0, -5)
 
     glRotatef(180, 20, -10, 20)

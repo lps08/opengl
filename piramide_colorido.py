@@ -99,11 +99,9 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     # adicionando a perspectiva 
-    glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     # adicionanodo a translação
-    glMatrixMode(GL_MODELVIEW)
     glTranslatef(0.0, 0, -5)
 
     # glRotatef(-50, 10, -10, 1)
@@ -123,7 +121,7 @@ def main():
                 pygame.quit()
                 quit()
 
-        # glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
         # habilitação da iluminação
         glEnable(GL_LIGHTING)
