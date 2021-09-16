@@ -74,7 +74,7 @@ def carregarTextura():
 
 def piramide():
     glBegin(GL_QUADS)
-
+    #Mapeando e construindo o objeto para receber texturas
     glTexCoord2f(0.0, 0.0)
     glVertex3f(0, 0, 1)
     
@@ -123,13 +123,11 @@ def piramide():
     glTexCoord2f(1.0, 1.0)
     glVertex3f(-1, 0, -1)
 
-    for i_superficie, superfice in enumerate(superficies):
+    #Adição de cor no objeto
+    for superfice in superficies:
 
         # index onde será percorrido a lista de cores já definida
         idx = 0
-
-        # adicionando superficies normais para pegar a luz
-        glNormal3fv(normals[i_superficie])
 
         # percorrendo cada vertice de uma superficie
         for vertice in superfice:
@@ -137,9 +135,6 @@ def piramide():
             glColor3fv(colors[idx])
             # passando para o proximo index
             idx += 1
-
-            # criando o triangulo
-            glVertex3fv(piramideVertices[vertice])
     
     glEnd()
 
