@@ -46,16 +46,22 @@ colors = (
 )
 
 
-def loadTexture():
+def carregarTextura():
+    # carregando a imagem para aplicar na superficie do objeto
     textureSurface = pygame.image.load('texture.jpg')
+    # transformando a imagem para string, o tipo de que o opengl aceita
     textureData = pygame.image.tostring(textureSurface, "RGBA", 1)
+
+    # pegando as dimensionalidade da imegem
     width = textureSurface.get_width()
     height = textureSurface.get_height()
 
+    # habilitando a textura
     glEnable(GL_TEXTURE_2D)
     texid = glGenTextures(1)
 
-    glBindTexture(GL_TEXTURE_3D, texid)
+    # habilitando os parâmetros a variável que ira receber a textura que irá passar ao objeto
+    glBindTexture(GL_TEXTURE_2D, texid)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
                  0, GL_RGBA, GL_UNSIGNED_BYTE, textureData)
 
@@ -159,7 +165,7 @@ def main():
     # aplicando o tamanho da tela e definindo as configurações necessárias do opengl
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
-    loadTexture()
+    carregarTextura()
 
     # adicionando a perspectiva 
     glMatrixMode(GL_PROJECTION)
@@ -196,10 +202,6 @@ def main():
         # glRotatef(1, 3, 1, 1)
         # chamando o objeto criado
         piramide()
-
-        glDisable(GL_LIGHT0)
-        glDisable(GL_LIGHTING)
-        glDisable(GL_COLOR_MATERIAL)
 
         pygame.display.flip()
         pygame.time.wait(10)
