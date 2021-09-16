@@ -90,7 +90,6 @@ def main():
     """
         Função principal onde irá renderizar a construção do objeto
     """
-    global superficies
     # iniciando o pygame, onde é o responsável pela renderização
     pygame.init()
 
@@ -107,12 +106,14 @@ def main():
     glMatrixMode(GL_MODELVIEW)
     glTranslatef(0.0, 0, -5)
 
-    glLight(GL_LIGHT0, GL_POSITION,  (0, 0, 1, 0)) # directional light from the front
-    glLight(GL_LIGHT0, GL_POSITION,  (5, 5, 5, 1)) # point light from the left, top, front
-    glLightfv(GL_LIGHT0, GL_AMBIENT, (0, 0, 0, 1))
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
+    glRotatef(-50, 10, -10, 1)
+    # parametros de iluminação
+    # glLight(GL_LIGHT0, GL_POSITION,  (0, 0, 1, 0))
+    # glLight(GL_LIGHT0, GL_POSITION,  (5, 5, 5, 1))
+    # glLightfv(GL_LIGHT0, GL_AMBIENT, (0, 0, 0, 1))
+    # glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
 
-    glEnable(GL_DEPTH_TEST)
+    # glEnable(GL_DEPTH_TEST)
 
     # loop que faz a renderização do objeto utilizando o pygame
     while True:
@@ -122,20 +123,18 @@ def main():
                 pygame.quit()
                 quit()
 
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        # glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
-        glEnable(GL_LIGHTING)
-        glEnable(GL_LIGHT0)
-        glEnable(GL_COLOR_MATERIAL)
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE )
+        # habilitação da iluminação
+        # glEnable(GL_LIGHTING)
+        # glEnable(GL_LIGHT0)
 
-        glRotatef(1, 3, 1, 1)
+        # glEnable(GL_COLOR_MATERIAL)
+        # glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE )
+
+        # glRotatef(1, 3, 1, 1)
         # chamando o objeto criado
         piramide()
-
-        glDisable(GL_LIGHT0)
-        glDisable(GL_LIGHTING)
-        glDisable(GL_COLOR_MATERIAL)
 
         pygame.display.flip()
         pygame.time.wait(10)
